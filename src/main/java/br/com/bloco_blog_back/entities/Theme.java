@@ -1,9 +1,12 @@
 package br.com.bloco_blog_back.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_theme")
@@ -13,6 +16,10 @@ public class Theme implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "themes")
+    private Set<Post> posts = new HashSet<>();
 
     public Theme(){}
 
@@ -34,6 +41,10 @@ public class Theme implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
     }
 
     @Override

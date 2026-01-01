@@ -9,7 +9,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -36,6 +38,11 @@ public class Post implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Rating rating;
+
+    @ManyToMany
+    @JoinTable(name = "tb_post_theme", joinColumns = @JoinColumn(name = "post_id"),
+    inverseJoinColumns = @JoinColumn(name = "theme_id"))
+    private Set<Theme> themes = new HashSet<>();
 
     public Post(){}
 
@@ -100,6 +107,10 @@ public class Post implements Serializable {
 
     public void setRating(Rating rating) {
         this.rating = rating;
+    }
+
+    public Set<Theme> getThemes() {
+        return themes;
     }
 
     @Override

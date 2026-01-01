@@ -11,9 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import java.time.Instant;
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @Profile("test")
@@ -41,5 +39,9 @@ public class TestConfig implements CommandLineRunner {
         userRepository.saveAll(Arrays.asList(u1, u2));
         postRepository.saveAll(Arrays.asList(p1,p2));
         themeRepository.saveAll(Arrays.asList(t1,t2));
+
+        p1.getThemes().add(t1);
+
+        postRepository.saveAll(Arrays.asList(p1,p2));
     }
 }
