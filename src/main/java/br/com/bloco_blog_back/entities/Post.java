@@ -1,5 +1,6 @@
 package br.com.bloco_blog_back.entities;
 
+import br.com.bloco_blog_back.enums.Rating;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -33,12 +34,16 @@ public class Post implements Serializable {
     @JoinColumn(name = "user_id")
     private User createdBy;
 
+    @Enumerated(EnumType.STRING)
+    private Rating rating;
+
     public Post(){}
 
-    public Post(String title, String content, User createdBy) {
+    public Post(String title, String content, User createdBy,  Rating rating) {
         this.title = title;
         this.content = content;
         this.createdBy = createdBy;
+        this.rating = rating;
     }
 
     public Long getId() {
@@ -87,6 +92,14 @@ public class Post implements Serializable {
 
     public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 
     @Override
