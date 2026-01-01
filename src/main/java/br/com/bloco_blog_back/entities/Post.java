@@ -1,10 +1,17 @@
 package br.com.bloco_blog_back.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tb_post")
 public class Post implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String content;
