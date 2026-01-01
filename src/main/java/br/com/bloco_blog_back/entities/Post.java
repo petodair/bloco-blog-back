@@ -1,13 +1,16 @@
 package br.com.bloco_blog_back.entities;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "tb_post")
 public class Post implements Serializable {
 
@@ -16,15 +19,23 @@ public class Post implements Serializable {
     private Long id;
     private String title;
     private String content;
+
+    @CreatedDate
     private Instant createdAt;
+
+    @LastModifiedDate
     private Instant updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User createdBy;
 
     public Post(){}
 
-    public Post(String title, String content, Instant createdAt) {
+    public Post(String title, String content, User createdBy) {
         this.title = title;
         this.content = content;
-        this.createdAt = createdAt;
+        this.createdBy = createdBy;
     }
 
     public Long getId() {
@@ -65,6 +76,14 @@ public class Post implements Serializable {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 
     @Override

@@ -28,9 +28,6 @@ public class TestConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
         User u1 = new User("Maria Brown", "Maria@gmail.com", "12345678");
         User u2 = new User("Alex Grenn", "Alex@gmail.com", "12345678");
-        Post p1 = new Post("Uma nova adição ao ESO", "Essa semana saiu uma das melhores atualizações",
-                Instant.now());
         userRepository.saveAll(Arrays.asList(u1, u2));
-        postRepository.save(p1);
     }
 }

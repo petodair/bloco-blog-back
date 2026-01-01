@@ -3,6 +3,8 @@ package br.com.bloco_blog_back.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,12 +18,17 @@ public class User implements Serializable {
     private String email;
     private String password;
 
-    private User(){}
+    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public User() {
+
     }
 
     public Long getId() {
@@ -56,17 +63,19 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username)
-                && Objects.equals(email, user.email)
-                && Objects.equals(password, user.password);
+        return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, email, password);
+        return Objects.hashCode(id);
     }
 }
