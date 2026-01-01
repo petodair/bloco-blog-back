@@ -28,6 +28,9 @@ public class TestConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
         User u1 = new User("Maria Brown", "Maria@gmail.com", "12345678");
         User u2 = new User("Alex Grenn", "Alex@gmail.com", "12345678");
+        Post p1 = new Post("Novo Post","Esse é meu novo post",u1);
+        Post p2 = new Post("Novo Post 2","Esse é meu novo post 2",u2);
         userRepository.saveAll(Arrays.asList(u1, u2));
+        postRepository.saveAll(Arrays.asList(p1,p2));
     }
 }
